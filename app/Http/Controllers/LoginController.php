@@ -4,16 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use PragmaRX\Google2FA\Google2FA;
 
 class LoginController extends BaseController
 {
     public function create(Request $request)
     {
         if ($request->header('referer') == 'http://127.0.0.1:8000/register') {
-            session()->flash('showSlider', 'yesss');
+            session()->flash('showSlider', 'yes');
         }
         return view('login.create');
     }

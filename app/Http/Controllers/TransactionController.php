@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-
 class TransactionController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -31,7 +30,6 @@ class TransactionController extends BaseController
 
     public function validateTransaction(Request $request)
     {
-        //ddd($request->header('referer'), $request->input());
         $accountToNumberValidation = $request->has('account_number') ? ['required', new InDatabase] : [];
         $accountToValidation = $request->has('account_to') ? ['required'] : [];
         $accountFromValidation = $request->has('account_from') ? ['required'] : [];
@@ -39,16 +37,12 @@ class TransactionController extends BaseController
             ? ['required', 'numeric', 'min:1', new NotExceedBalance((int)$request->input('account_from'))]
             : ['required', 'numeric', new NotExceedCryptoAmount((int)$request->input('value'))];
 
-        //ddd($request->input(), $amount);
-
         request()->validate([
             'account_from' => $accountFromValidation,
             'account_number' => $accountToNumberValidation,
             'account_to' => $accountToValidation,
             'amount' => $amount
         ]);
-
-        //ddd('success!');
 
         if (!!strpos($request->header('referer'), '/accounts/investment/deposit')) {
             $accountFrom = Account::findOrFail($request->input('account_from'));

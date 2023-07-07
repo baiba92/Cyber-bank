@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\InvestmentAccount;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class AccountController extends Controller

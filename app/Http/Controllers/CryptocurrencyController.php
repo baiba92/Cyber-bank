@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
-use App\Models\InvestmentAccount;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class CryptocurrencyController extends Controller

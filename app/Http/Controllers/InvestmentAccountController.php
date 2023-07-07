@@ -5,14 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\CryptoTransaction;
 use App\Models\InvestmentAccount;
-use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 
 class InvestmentAccountController extends Controller
 {
@@ -99,11 +94,6 @@ class InvestmentAccountController extends Controller
             'account_from' => $request->input('account_from') ?: null,
             'account_to' => $request->input('account_to')?: null
         ]);
-    }
-
-    public function update(Request $request)
-    {
-
     }
 
     public function delete()

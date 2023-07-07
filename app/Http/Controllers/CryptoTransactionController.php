@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
 use App\Models\CryptoTransaction;
 use App\Models\InvestmentAccount;
-use App\Models\Transaction;
 use App\Rules\ValidOTP;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 
 class CryptoTransactionController extends Controller
 {
@@ -32,13 +29,11 @@ class CryptoTransactionController extends Controller
 
     public function store(Request $request)
     {
-        //ddd($request->input());
         $request->validate([
             'one_time_password' => ['required', new ValidOTP]
         ]);
 
         $request->merge(session('request_data'));
-        //ddd($request->input());
 
         $account = InvestmentAccount::findOrFail($request->input('account_from'));
         $amount = $request->input('amount');
@@ -85,7 +80,6 @@ class CryptoTransactionController extends Controller
         ]);
 
         $request->merge(session('request_data'));
-        //ddd($request->input());
 
         $account = InvestmentAccount::findOrFail($request->input('account_to'));
         $account->balance += $request->input('amount');

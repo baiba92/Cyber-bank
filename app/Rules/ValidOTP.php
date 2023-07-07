@@ -18,7 +18,7 @@ class ValidOTP implements Rule
         return $this->google2fa->verifyKey(auth()->user()->otp_secret, $value);
     }
 
-    public function message()
+    public function message(): string
     {
         return 'The code is not valid';
     }

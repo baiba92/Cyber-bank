@@ -6,13 +6,14 @@ use App\Http\Controllers\CryptoTransactionController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\InvestmentAccountController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\UserController;
 use App\Models\Account;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
-use PragmaRX\Google2FAQRCode\Google2FA;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,29 +26,7 @@ use PragmaRX\Google2FAQRCode\Google2FA;
 |
 */
 
-
-Route::get('/authenticate', function (Request $request) {
-
-    $request->session()->reflash();
-    $google2fa = (new Google2FA());
-    $qrCodeUrl = $google2fa->getQRCodeInline(
-        'name', 'e-mail',
-        auth()->user()->otp_secret
-    );
-    $path = '/transaction';
-    if (!!strpos($request->header('referer'), '/accounts/investment/cryptocurrencies/buy')) {
-        $path = '/accounts/investment/cryptocurrencies/owned';
-    }
-    if (!!strpos($request->header('referer'), '/accounts/investment/cryptocurrencies/sell')) {
-        $path = '/accounts/investment/cryptocurrencies/sell';
-    }
-
-    return view('authenticate', [
-        'qrCode' => $qrCodeUrl,
-        'secret' => auth()->user()->otp_secret,
-        'path' => $path
-    ]);
-})->middleware('auth');
+Route::get('/authenticate', [TwoFactorController::class, 'index'])->middleware('auth');
 
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');
 Route::post('/register', [UserController::class, 'store'])->middleware('guest');
